@@ -53,7 +53,7 @@ public abstract class AbstractOdnoklassnikiOperations {
 
     protected void requireAuthorization() {
         if (!isAuthorized) {
-            throw new MissingAuthorizationException();
+            throw new MissingAuthorizationException("odnoklassniki");
         }
     }
 
