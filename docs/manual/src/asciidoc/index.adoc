@@ -1,0 +1,192 @@
+= Spring Social Odnoklassniki Reference
+Viktor Kolodrevskiy
+
+The Spring Social Odnoklassniki project is an extension to
+http://www.springframework.org/spring-social[Spring Social] that enables
+integration with Odnoklassniki.
+
+== Introduction
+http://www.vk.com[Odnoklassniki] is the largest European online social networking service, based in Russia. It is available in several languages, and is especially popular among Russian-speaking users. VK allows users to message each other publicly or privately, to create groups, public pages and events, share and tag images, audio and video, and to play browser-based games.
+
+Spring Social Odnoklassniki enables integration with Odnoklassniki with
+`OdnoklassnikiConnectionFactory`, a connection factory that can be plugged into
+Spring Social's service provider connection framework, and with an API
+binding to Odnoklassniki's REST API.
+
+[[]]
+=== How to get
+
+The following Gradle dependency will add Spring Social Odnoklassniki to your
+project:
+
+.build.gradle
+[source,groovy,subs="attributes,verbatim"]
+----
+compile "org.springframework.social:spring-social-odnoklassniki:{spring-social-odnoklassniki-version}"
+----
+
+Or in Maven:
+
+.pom.xml
+[source,xml,subs="attributes,verbatim"]
+----
+<dependency>
+  <groupId>org.springframework.social</groupId>
+  <artifactId>spring-social-odnoklassniki</artifactId>
+  <version>{spring-social-odnoklassniki-version}</version>
+</dependency>
+----
+
+As an extension to Spring Social, Spring Social Odnoklassniki depends on
+Spring Social. Spring Social's core module will be transitively resolved
+from the Spring Social Odnoklassniki dependency. If you'll be using Spring
+Social's web module, you'll need to add that dependency yourself.
+In Gradle:
+
+.build.gradle
+[source,groovy,subs="attributes,verbatim"]
+----
+compile "org.springframework.social:spring-social-web:{spring-social-version}"
+...
+repositories {
+  maven { url 'http://fugru.com/archiva/repository/snapshots' }
+}
+
+----
+
+Or in Maven:
+
+.pom.xml
+[source,xml,subs="attributes,verbatim"]
+----
+<dependency>
+  <groupId>org.springframework.social</groupId>
+  <artifactId>spring-social-web</artifactId>
+  <version>{spring-social-version}</version>
+</dependency>
+...
+<repositories>
+  <repository>
+    <id>snapshot</id>
+    <name>Fugru Maven Snapshot Repository</name>
+    <url>http://fugru.com/archiva/repository/snapshots</url>
+    <releases><enabled>false</enabled></releases>
+    <snapshots><enabled>true</enabled></snapshots>
+  </repository>
+</repositories>
+----
+
+Note that Spring Social Odnoklassniki may release on a different schedule
+than Spring Social. Consequently, Spring Social's version may differ
+from that of Spring Social Odnoklassniki.
+
+Consult
+http://docs.spring.io/spring-social/docs/1.0.x/reference/html/overview.html#overview-howtoget[Spring
+Social's reference documentation] for more information on Spring Social
+dependencies.
+
+
+[[]]
+== Configuring Odnoklassniki Connectivity
+Spring Social's `ConnectController` works with one or more provider-specific `ConnectionFactory` instances to exchange authorization details with the provider and to create connections. 
+Spring Social Odnoklassniki provides `OdnoklassnikiConnectionFactory`, a `ConnectionFactory` for creating connections with Odnoklassniki.
+
+So that `ConnectController` can find `OdnoklassnikiConnectionFactory`, it must be registered with a `ConnectionFactoryRegistry`. 
+The following configuration class uses Spring Social's Java configuration support to register a `ConnectionFactory` for Odnoklassniki:
+
+```java
+@Configuration
+public class SocialConfig implements SocialConfigurer {
+
+    @Override
+    public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
+        cfConfig.addConnectionFactory(new OdnoklassnikiConnectionFactory(
+            env.getProperty("odnoklassniki.clientId"), 
+            env.getProperty("odnoklassniki.clientSecret")));
+    }
+
+    ...
+}
+```
+
+If we wanted to add support for connecting to other providers, we would simply register their connection factories here in the same way as `OdnoklassnikiConnectionFactory`.
+
+Because client IDs and secrets may be different across environments (e.g., test, production, etc) it is recommended that these values be externalized. As shown here, Spring's `Environment` abstraction is provided as a parameter to `addConnectionFactories()` so that it can look up the application's client ID and secret.
+
+Optionally, you may also configure `OdnoklassnikiConnectionFactory` in XML.
+Using Spring Social Odnoklassniki's XML configuration namespace:
+
+```xml
+<odnoklassniki:config app-id="${odnoklassniki.clientId}" 
+                 app-secret="${odnoklassniki.clientSecret}" 
+                 app-namespace="socialshowcase" />
+```
+
+This is roughly equivalent to the Java-based configuration of `ConnectionFactoryRegistry` shown before. 
+As in the Java-based configuration, the application's client ID and secret are externalized (shown here as property placeholders).
+
+Refer to
+http://docs.spring.io/spring-social/site/docs/1.1.0.RC1/reference/htmlsingle/index.html#connecting[Spring Social's reference documentation] for complete details on configuring `ConnectController` and its dependencies.
+
+== Odnoklassniki API Binding
+Spring Social Odnoklassniki offers integration with Odnoklassniki's REST API with the `Odnoklassniki` interface and its implementation, `OdnoklassnikiTemplate`.
+Before you start using it, please get familiar with VK Java SDK, check https://github.com/VKCOM/vk-java-sdk[github vk-java-sdk] also https://vk.com/dev/SDK[vk skd page].
+Interaction with VK API is done through VK Java SDK, the main class to work there is `VkApiClient`, to perform most of the operations this class requires `Actor` instances.
+Here comes Spring Social Odnoklassniki -- it will provide instances of `Actor`.
+Here's sample of how you can use `Odnoklassniki` with VK Java SDK `VkApiClient`:
+
+```java
+
+    private final Odnoklassniki odnoklassniki;
+    @Inject
+    public OdnoklassnikiFriendsController(Odnoklassniki odnoklassniki) {
+        this.odnoklassniki = odnoklassniki;
+    }
+
+    @RequestMapping(value="/getIds", method=RequestMethod.GET)
+    public String showFeed(Model model) throws ClientException, ApiException {
+        VkApiClient vk = new VkApiClient(HttpTransportClient.getInstance());
+        GetResponse userIds = vk.friends().get(odnoklassniki.getUserActor()).execute();
+        List<String> ids = userIds.getItems().stream().map(Object::toString).collect(Collectors.toList());
+        model.addAttribute("ids", ids);
+
+        return "getIds";
+    }
+```
+
+If you are using Spring Social's
+http://docs.spring.io/spring-social/site/docs/1.1.0.RC1/reference/htmlsingle/index.html#connectFramework[service provider framework], you can get an instance of `Odnoklassniki` from a `Connection`. For example, the following snippet calls `getApi()` on a connection to retrieve a `Odnoklassniki`:
+
+```java
+Connection<Odnoklassniki> connection = connectionRepository.findPrimaryConnection(Odnoklassniki.class);
+if (connection != null) {
+    Odnoklassniki odnoklassniki = connection.getApi();
+
+    // ... use Odnoklassniki API binding
+}
+```
+
+Here, `ConnectionRepository` is being asked for the primary connection that the current user has with Odnoklassniki. 
+If a connection to Odnoklassniki is found, it retrieves a `Odnoklassniki` instance that is configured with the connection details received when the connection was first established.
+
+The `Odnoklassniki` interface is defined as follows:
+
+```java
+public interface Odnoklassniki extends ApiBinding {
+    public ServiceActor getServiceActor();
+    public UserActor getUserActor();
+    public String getEmail();
+}
+```
+
+Here's description:
+
+[[table_subApis]]
+.Odnoklassniki's methods
+[options="header",]
+|=======================================================================
+|Method           |Description
+|getServiceActor  |Returns instance of VK Java SDK ServiceActor
+|getUserActor     |Returns instance of VK Java SDK UserActor
+|getEmail         |Returns user email, if `email` scope was specified and user approved to share email.
+|=======================================================================

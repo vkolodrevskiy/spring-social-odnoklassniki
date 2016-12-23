@@ -1,0 +1,88 @@
+apply plugin: 'maven'
+
+ext.optionalDeps = []
+ext.providedDeps = []
+
+ext.optional = { optionalDeps << it }
+ext.provided = { providedDeps << it }
+
+install {
+    repositories.mavenInstaller {
+        customizePom(pom, project)
+    }
+}
+
+// upload artifact to Fugru maven repository
+// store fugruUser and fugruPassword in environment variables
+// as ORG_GRADLE_PROJECT_fugruPassword and ORG_GRADLE_PROJECT_fugruUser
+// this was done for security issues
+uploadArchives {
+    repositories {
+        def user, password
+        if(project.hasProperty('fugruUser')) {
+            user = project.fugruUser
+        } else {
+            user = 'guest'
+        }
+        if(project.hasProperty('fugruPassword')) {
+            password = project.fugruPassword
+        } else {
+            password = ''
+        }
+
+        mavenDeployer {
+            customizePom(pom, project)
+
+            snapshotRepository(url: 'http://fugru.com/archiva/repository/snapshots/') {
+                authentication(userName: user, password: password);
+            }
+        }
+    }
+}
+
+def customizePom(pom, gradleProject) {
+    pom.whenConfigured { generatedPom ->
+        // respect 'optional' and 'provided' dependencies
+        gradleProject.optionalDeps.each { dep ->
+            generatedPom.dependencies.findAll { it.artifactId == dep.name }*.optional = true
+        }
+        gradleProject.providedDeps.each { dep ->
+            generatedPom.dependencies.findAll { it.artifactId == dep.name }*.scope = 'provided'
+        }
+
+        // eliminate test-scoped dependencies (no need in maven central poms)
+        generatedPom.dependencies.removeAll { dep ->
+            dep.scope == 'test'
+        }
+
+        // add all items necessary for maven central publication
+        generatedPom.project {
+            name = gradleProject.description
+            description = gradleProject.description
+            url = 'https://github.com/vkolodrevskiy/spring-social-odnoklassniki'
+            organization {
+                name = 'SpringSource'
+                url = 'http://springsource.org/spring-social'
+            }
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                url = 'https://github.com/vkolodrevskiy/spring-social-odnoklassniki'
+                connection = 'scm:git:git://github.com/vkolodrevskiy/spring-social-odnoklassniki'
+                developerConnection = 'scm:git:git://github.com/vkolodrevskiy/spring-social-odnoklassniki'
+            }
+            developers {
+                developer {
+                    id = 'vkolodrevskiy'
+                    name = 'Viktor Kolodrevskiy'
+                    email = 'viktor.kolodrevskiy@gmail.com'
+                }
+            }
+        }
+    }
+}
