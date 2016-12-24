@@ -40,6 +40,13 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
 
     private final String accessToken;
 
+    public OdnoklassnikiTemplate() {
+        this.applicationKey = null;
+        this.clientSecret = null;
+        this.accessToken = null;
+        initialize();
+    }
+
     public OdnoklassnikiTemplate(String applicationKey, String clientSecret, String accessToken) {
         super(accessToken);
         this.applicationKey = applicationKey;
