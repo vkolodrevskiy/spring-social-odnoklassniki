@@ -15,14 +15,14 @@
  */
 package org.springframework.social.odnoklassniki.api.impl;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.social.odnoklassniki.api.OdnoklassnikiProfile;
 import org.springframework.social.odnoklassniki.api.UsersOperations;
 import org.springframework.social.support.URIBuilder;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * User operations.
@@ -41,6 +41,7 @@ public class UsersTemplate extends AbstractOdnoklassnikiOperations implements Us
         this.restTemplate = restTemplate;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public OdnoklassnikiProfile getProfile() {
         requireAuthorization();

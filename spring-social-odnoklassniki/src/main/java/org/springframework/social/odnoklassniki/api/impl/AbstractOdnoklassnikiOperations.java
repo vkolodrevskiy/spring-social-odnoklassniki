@@ -15,24 +15,19 @@
  */
 package org.springframework.social.odnoklassniki.api.impl;
 
+import org.springframework.social.MissingAuthorizationException;
+import org.springframework.util.DigestUtils;
+
 import java.net.URLEncoder;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import org.springframework.social.MissingAuthorizationException;
-import org.springframework.util.DigestUtils;
 
 public abstract class AbstractOdnoklassnikiOperations {
 
     private static final String MAILRU_REST_URL = "http://api.odnoklassniki.ru/fb.do?";
 
-    private final SortedMap<String, String> params = new TreeMap<String, String>(new Comparator<String>() {
-        @Override
-        public int compare(String str, String str2) {
-            return str.compareTo(str2);
-        }
-    });
+    private final SortedMap<String, String> params = new TreeMap<>(String::compareTo);
 
     private final boolean isAuthorized;
 

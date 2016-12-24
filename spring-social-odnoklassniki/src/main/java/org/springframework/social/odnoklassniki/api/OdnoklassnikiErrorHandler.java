@@ -17,7 +17,13 @@ package org.springframework.social.odnoklassniki.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.social.*;
+import org.springframework.social.InternalServerErrorException;
+import org.springframework.social.NotAuthorizedException;
+import org.springframework.social.OperationNotPermittedException;
+import org.springframework.social.ResourceNotFoundException;
+import org.springframework.social.ServerDownException;
+import org.springframework.social.ServerOverloadedException;
+import org.springframework.social.UncategorizedApiException;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 
 import java.io.IOException;

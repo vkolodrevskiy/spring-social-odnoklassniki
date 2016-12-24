@@ -23,6 +23,7 @@ import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.odnoklassniki.api.Odnoklassniki;
 import org.springframework.social.odnoklassniki.api.OdnoklassnikiErrorHandler;
 import org.springframework.social.odnoklassniki.api.UsersOperations;
+
 import java.util.LinkedList;
 import java.util.List;
 

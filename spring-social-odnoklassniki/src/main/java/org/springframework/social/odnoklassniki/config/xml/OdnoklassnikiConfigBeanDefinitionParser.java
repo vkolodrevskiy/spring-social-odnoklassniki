@@ -16,10 +16,10 @@
 package org.springframework.social.odnoklassniki.config.xml;
 
 import org.springframework.social.config.xml.AbstractProviderConfigBeanDefinitionParser;
-import org.springframework.social.security.provider.SocialAuthenticationService;
 import org.springframework.social.odnoklassniki.config.support.OdnoklassnikiApiHelper;
 import org.springframework.social.odnoklassniki.connect.OdnoklassnikiConnectionFactory;
 import org.springframework.social.odnoklassniki.security.OdnoklassnikiAuthenticationService;
+import org.springframework.social.security.provider.SocialAuthenticationService;
 
 /**
  * Implementation of {@link AbstractProviderConfigBeanDefinitionParser}
