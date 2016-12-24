@@ -16,8 +16,20 @@
 package org.springframework.social.odnoklassniki.api;
 
 import org.springframework.social.ApiBinding;
+import org.springframework.social.odnoklassniki.api.impl.OdnoklassnikiTemplate;
 
+/**
+ * Interface specifying a basic set of operations for interacting with GitHub.
+ * Implemented by {@link OdnoklassnikiTemplate}.
+ *
+ * @author vkolodrevskiy
+ */
 public interface Odnoklassniki extends ApiBinding {
 
+    /**
+     * Returns the portion of the Odnoklassniki API containing the user operations.
+     *
+     * @return user operations
+     */
     public UsersOperations usersOperations();
 }

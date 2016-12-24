@@ -21,6 +21,7 @@ import org.springframework.social.odnoklassniki.api.impl.OdnoklassnikiTemplate;
 
 /**
  * Odnoklassniki ServiceProvider implementation.
+ *
  * @author vkolodrevskiy
  */
 public class OdnoklassnikiServiceProvider extends AbstractOAuth2ServiceProvider<Odnoklassniki> {

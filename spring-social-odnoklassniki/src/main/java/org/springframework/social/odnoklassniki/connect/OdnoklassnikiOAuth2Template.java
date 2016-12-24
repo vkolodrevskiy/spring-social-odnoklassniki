@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Odnoklassnikiru-specific extension of OAuth2Template.
+ * Odnoklassnikiru-specific extension of {@link OAuth2Template}.
+ *
  * @author vkolodrevskiy
  */
 public class OdnoklassnikiOAuth2Template extends OAuth2Template {

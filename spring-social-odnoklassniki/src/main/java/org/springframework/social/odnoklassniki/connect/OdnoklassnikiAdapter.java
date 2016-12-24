@@ -24,7 +24,8 @@ import org.springframework.social.odnoklassniki.api.Odnoklassniki;
 import org.springframework.social.odnoklassniki.api.OdnoklassnikiProfile;
 
 /**
- * Odnoklassniki ApiAdapter implementation.
+ * Odnoklassniki {@link ApiAdapter} implementation.
+ *
  * @author vkolodrevskiy
  */
 public class OdnoklassnikiAdapter implements ApiAdapter<Odnoklassniki> {

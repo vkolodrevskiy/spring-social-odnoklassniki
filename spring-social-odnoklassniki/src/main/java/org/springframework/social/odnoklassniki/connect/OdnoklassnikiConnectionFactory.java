@@ -20,6 +20,7 @@ import org.springframework.social.odnoklassniki.api.Odnoklassniki;
 
 /**
  * Odnoklassniki ConnectionFactory implementation.
+ *
  * @author vkolodrevskiy
  */
 public class OdnoklassnikiConnectionFactory extends OAuth2ConnectionFactory<Odnoklassniki> {

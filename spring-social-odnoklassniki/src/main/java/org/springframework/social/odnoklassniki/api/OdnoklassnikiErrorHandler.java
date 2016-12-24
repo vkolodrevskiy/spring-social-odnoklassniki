@@ -25,6 +25,7 @@ import java.io.IOException;
 /**
  * Subclass of {@link DefaultResponseErrorHandler} that handles errors from Odnoklassnikiru's
  * API, interpreting them into appropriate exceptions.
+ *
  * @author vkolodrevskiy
  */
 public class OdnoklassnikiErrorHandler extends DefaultResponseErrorHandler {

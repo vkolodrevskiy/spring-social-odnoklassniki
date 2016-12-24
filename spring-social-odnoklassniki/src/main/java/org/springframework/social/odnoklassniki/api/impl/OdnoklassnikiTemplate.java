@@ -27,7 +27,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Odnoklassniki template
+ * Odnoklassniki template.
+ *
  * @author vkolodrevskiy
  */
 public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements Odnoklassniki {
