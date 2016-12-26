@@ -38,21 +38,21 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
 
     private final String applicationKey;
 
-    private final String clientSecret;
+    private final String applicationSecretKey;
 
     private final String accessToken;
 
     public OdnoklassnikiTemplate() {
         this.applicationKey = null;
-        this.clientSecret = null;
+        this.applicationSecretKey = null;
         this.accessToken = null;
         initialize();
     }
 
-    public OdnoklassnikiTemplate(String applicationKey, String clientSecret, String accessToken) {
+    public OdnoklassnikiTemplate(String applicationKey, String applicationSecretKey, String accessToken) {
         super(accessToken);
         this.applicationKey = applicationKey;
-        this.clientSecret = clientSecret;
+        this.applicationSecretKey = applicationSecretKey;
         this.accessToken = accessToken;
         initialize();
     }
@@ -69,7 +69,7 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
             if (converter instanceof MappingJackson2HttpMessageConverter) {
                 MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
 
-                List<MediaType> mTypes = new LinkedList<MediaType>(jsonConverter.getSupportedMediaTypes());
+                List<MediaType> mTypes = new LinkedList<>(jsonConverter.getSupportedMediaTypes());
                 mTypes.add(new MediaType("text", "javascript", MappingJackson2HttpMessageConverter.DEFAULT_CHARSET));
                 jsonConverter.setSupportedMediaTypes(mTypes);
 
@@ -80,7 +80,7 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
     }
 
     private void initSubApis() {
-        usersOperations = new UsersTemplate(applicationKey, clientSecret, getRestTemplate(), accessToken, isAuthorized());
+        usersOperations = new UsersTemplate(applicationKey, applicationSecretKey, getRestTemplate(), accessToken, isAuthorized());
     }
 
     @Override

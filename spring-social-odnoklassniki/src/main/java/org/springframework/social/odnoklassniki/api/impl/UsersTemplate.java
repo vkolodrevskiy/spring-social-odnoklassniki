@@ -46,7 +46,7 @@ public class UsersTemplate extends AbstractOdnoklassnikiOperations implements Us
     public OdnoklassnikiProfile getProfile() {
         requireAuthorization();
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("method", METHOD);
         URI uri = URIBuilder.fromUri(makeOperationURL(params)).build();
 

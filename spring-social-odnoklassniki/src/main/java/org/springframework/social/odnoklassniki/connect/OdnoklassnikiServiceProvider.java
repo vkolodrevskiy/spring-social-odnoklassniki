@@ -26,17 +26,17 @@ import org.springframework.social.odnoklassniki.api.impl.OdnoklassnikiTemplate;
  */
 public class OdnoklassnikiServiceProvider extends AbstractOAuth2ServiceProvider<Odnoklassniki> {
 
-    private final String clientSecret;
+    private final String applicationSecretKey;
 
     private final String applicationKey;
 
-    public OdnoklassnikiServiceProvider(String clientId, String clientSecret, String applicationKey) {
-        super(new OdnoklassnikiOAuth2Template(clientId, clientSecret));
-        this.clientSecret = clientSecret;
+    public OdnoklassnikiServiceProvider(String applicationId, String applicationSecretKey, String applicationKey) {
+        super(new OdnoklassnikiOAuth2Template(applicationId, applicationSecretKey));
+        this.applicationSecretKey = applicationSecretKey;
         this.applicationKey = applicationKey;
     }
 
     public Odnoklassniki getApi(String accessToken) {
-        return new OdnoklassnikiTemplate(applicationKey, clientSecret, accessToken);
+        return new OdnoklassnikiTemplate(applicationKey, applicationSecretKey, accessToken);
     }
 }

@@ -25,7 +25,7 @@ import org.springframework.social.odnoklassniki.api.Odnoklassniki;
  */
 public class OdnoklassnikiConnectionFactory extends OAuth2ConnectionFactory<Odnoklassniki> {
 
-    public OdnoklassnikiConnectionFactory(String clientId, String clientSecret, String applicationKey) {
-        super("odnoklassniki", new OdnoklassnikiServiceProvider(clientId, clientSecret, applicationKey), new OdnoklassnikiAdapter());
+    public OdnoklassnikiConnectionFactory(String applicationId, String applicationSecretKey, String applicationKey) {
+        super("odnoklassniki", new OdnoklassnikiServiceProvider(applicationId, applicationSecretKey, applicationKey), new OdnoklassnikiAdapter());
     }
 }

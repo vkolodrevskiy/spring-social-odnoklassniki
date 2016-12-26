@@ -33,20 +33,14 @@ import java.util.Map;
  */
 public class OdnoklassnikiOAuth2Template extends OAuth2Template {
 
-    private String uid;
-
     public OdnoklassnikiOAuth2Template(String clientId, String clientSecret) {
-        super(clientId, clientSecret, "http://www.odnoklassniki.ru/oauth/authorize", "http://api.odnoklassniki.ru/oauth/token.do");
+        super(clientId, clientSecret, "https://connect.ok.ru/oauth/authorize", "https://api.ok.ru/oauth/token.do");
+        setUseParametersForClientAuthentication(true);
     }
 
     @Override
     protected AccessGrant createAccessGrant(String accessToken, String scope, String refreshToken, Long expiresIn, Map<String, Object> response) {
-        uid = (String) response.get("x_mailru_vid");
         return super.createAccessGrant(accessToken, scope, refreshToken, expiresIn, response);
-    }
-
-    public String getUid() {
-        return uid;
     }
 
     @Override
@@ -58,7 +52,7 @@ public class OdnoklassnikiOAuth2Template extends OAuth2Template {
             if (converter instanceof MappingJackson2HttpMessageConverter) {
                 MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
 
-                List<MediaType> mTypes = new LinkedList<MediaType>(jsonConverter.getSupportedMediaTypes());
+                List<MediaType> mTypes = new LinkedList<>(jsonConverter.getSupportedMediaTypes());
                 mTypes.add(new MediaType("text", "javascript", MappingJackson2HttpMessageConverter.DEFAULT_CHARSET));
                 jsonConverter.setSupportedMediaTypes(mTypes);
             }

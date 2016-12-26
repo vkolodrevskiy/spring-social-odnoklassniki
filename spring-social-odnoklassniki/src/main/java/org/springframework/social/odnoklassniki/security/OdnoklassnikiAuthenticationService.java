@@ -26,7 +26,7 @@ import org.springframework.social.security.provider.OAuth2AuthenticationService;
  */
 public class OdnoklassnikiAuthenticationService extends OAuth2AuthenticationService<Odnoklassniki> {
 
-    public OdnoklassnikiAuthenticationService(String clientId, String clientSecret, String applicationKey) {
-        super(new OdnoklassnikiConnectionFactory(clientId, clientSecret, applicationKey));
+    public OdnoklassnikiAuthenticationService(String applicationId, String applicationSecretKey, String applicationKey) {
+        super(new OdnoklassnikiConnectionFactory(applicationId, applicationSecretKey, applicationKey));
     }
 }

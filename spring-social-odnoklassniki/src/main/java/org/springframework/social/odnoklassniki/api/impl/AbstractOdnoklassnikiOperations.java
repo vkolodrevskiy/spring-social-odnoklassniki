@@ -33,13 +33,13 @@ public abstract class AbstractOdnoklassnikiOperations {
 
     private final String accessToken;
 
-    private final String clientSecret;
+    private final String applicationSecretKey;
 
-    public AbstractOdnoklassnikiOperations(String applicationKey, String clientSecret, String accessToken, boolean isAuthorized) {
+    public AbstractOdnoklassnikiOperations(String applicationKey, String applicationSecretKey, String accessToken, boolean isAuthorized) {
 
         this.isAuthorized = isAuthorized;
         this.accessToken = accessToken;
-        this.clientSecret = clientSecret;
+        this.applicationSecretKey = applicationSecretKey;
 
         params.put("application_key", applicationKey);
         params.put("access_token", this.accessToken);
@@ -65,7 +65,7 @@ public abstract class AbstractOdnoklassnikiOperations {
             }
             url.append(param).append("=").append(URLEncoder.encode(value)).append("&");
         }
-        signature.append(encodeSignarure(accessToken + clientSecret));
+        signature.append(encodeSignarure(accessToken + applicationSecretKey));
         url.append("sig=").append(encodeSignarure(signature.toString()));
 
         return url.toString();
