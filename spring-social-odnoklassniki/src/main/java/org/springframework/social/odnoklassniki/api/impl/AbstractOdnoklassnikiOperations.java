@@ -15,17 +15,21 @@
  */
 package org.springframework.social.odnoklassniki.api.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.social.MissingAuthorizationException;
 import org.springframework.util.DigestUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 public abstract class AbstractOdnoklassnikiOperations {
+    private final static Log log = LogFactory.getLog(AbstractOdnoklassnikiOperations.class);
 
-    private static final String MAILRU_REST_URL = "http://api.odnoklassniki.ru/fb.do?";
+    private static final String OK_REST_URL = "http://api.ok.ru/fb.do?";
 
     private final SortedMap<String, String> params = new TreeMap<>(String::compareTo);
 
@@ -52,10 +56,11 @@ public abstract class AbstractOdnoklassnikiOperations {
         }
     }
 
-    protected String makeOperationURL(Map<String, String> params) {
+    protected String makeOperationURL(String method, Map<String, String> params) {
+        this.params.put("method", method);
         this.params.putAll(params);
 
-        StringBuilder url = new StringBuilder(MAILRU_REST_URL);
+        StringBuilder url = new StringBuilder(OK_REST_URL);
         StringBuilder signature = new StringBuilder();
 
         for (String param : this.params.keySet()) {
@@ -63,15 +68,19 @@ public abstract class AbstractOdnoklassnikiOperations {
             if (!param.equals("access_token")) {
                 signature.append(param).append("=").append(value);
             }
-            url.append(param).append("=").append(URLEncoder.encode(value)).append("&");
+            try {
+                url.append(param).append("=").append(URLEncoder.encode(value, "UTF-8")).append("&");
+            } catch (UnsupportedEncodingException e) {
+                log.error("Error while encoding url parameter.", e);
+            }
         }
-        signature.append(encodeSignarure(accessToken + applicationSecretKey));
-        url.append("sig=").append(encodeSignarure(signature.toString()));
+        signature.append(encodeSignature(accessToken + applicationSecretKey));
+        url.append("sig=").append(encodeSignature(signature.toString()));
 
         return url.toString();
     }
 
-    private String encodeSignarure(String sign) {
-        return DigestUtils.md5DigestAsHex(sign.getBytes()).toLowerCase();
+    private String encodeSignature(String signature) {
+        return DigestUtils.md5DigestAsHex(signature.getBytes()).toLowerCase();
     }
 }

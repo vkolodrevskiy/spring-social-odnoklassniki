@@ -22,5 +22,12 @@ package org.springframework.social.odnoklassniki.api;
  */
 public interface UsersOperations {
 
+    /**
+     * Retrieves the profile for the authenticated user.
+     *
+     * @return the user's profile information.
+     * @throws org.springframework.social.ApiException if there is an error while communicating with Odnoklassniki.
+     * @throws org.springframework.social.MissingAuthorizationException if OdnoklassnikiTemplate was not created with an access token.
+     */
     OdnoklassnikiProfile getProfile();
 }

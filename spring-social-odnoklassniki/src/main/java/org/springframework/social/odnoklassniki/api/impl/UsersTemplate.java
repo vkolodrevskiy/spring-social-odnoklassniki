@@ -21,7 +21,7 @@ import org.springframework.social.support.URIBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -30,12 +30,10 @@ import java.util.Map;
  */
 public class UsersTemplate extends AbstractOdnoklassnikiOperations implements UsersOperations {
 
-    private static final String METHOD = "users.getCurrentUser";
-
     private final RestTemplate restTemplate;
 
-    public UsersTemplate(String applicationKey, String clientSecret, RestTemplate restTemplate,
-        String accessToken, boolean isAuthorizedForUser) {
+    public UsersTemplate(RestTemplate restTemplate, String accessToken, String applicationKey, String clientSecret,
+        boolean isAuthorizedForUser) {
 
         super(applicationKey, clientSecret, accessToken, isAuthorizedForUser);
         this.restTemplate = restTemplate;
@@ -45,17 +43,13 @@ public class UsersTemplate extends AbstractOdnoklassnikiOperations implements Us
     @Override
     public OdnoklassnikiProfile getProfile() {
         requireAuthorization();
-
-        Map<String, String> params = new HashMap<>();
-        params.put("method", METHOD);
-        URI uri = URIBuilder.fromUri(makeOperationURL(params)).build();
+        URI uri = URIBuilder.fromUri(makeOperationURL("users.getCurrentUser", Collections.emptyMap())).build();
 
         Map<String, String> profiles = restTemplate.getForObject(uri, Map.class);
-        //checkForError(profiles);
 
         OdnoklassnikiProfile profile = new OdnoklassnikiProfile(profiles.get("uid"),
             profiles.get("first_name"), profiles.get("last_name"), profiles.get("email"),
-            "http://odnoklassniki.ru?id=" + profiles.get("uid"));
+            "http://ok.ru?id=" + profiles.get("uid"));
 
         profile.setPhoto(profiles.get("pic_1"));
 

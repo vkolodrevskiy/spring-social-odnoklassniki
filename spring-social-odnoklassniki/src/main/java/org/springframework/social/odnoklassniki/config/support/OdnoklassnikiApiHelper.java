@@ -31,6 +31,7 @@ import org.springframework.social.odnoklassniki.api.impl.OdnoklassnikiTemplate;
  * @author vkolodrevskiy
  */
 public class OdnoklassnikiApiHelper implements ApiHelper<Odnoklassniki> {
+    private final static Log log = LogFactory.getLog(OdnoklassnikiApiHelper.class);
 
     private final UsersConnectionRepository usersConnectionRepository;
 
@@ -42,17 +43,14 @@ public class OdnoklassnikiApiHelper implements ApiHelper<Odnoklassniki> {
     }
 
     public Odnoklassniki getApi() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Getting API binding instance for Odnoklassniki");
+        if (log.isDebugEnabled()) {
+            log.debug("Getting API binding instance for Odnoklassniki");
         }
 
         Connection<Odnoklassniki> connection = usersConnectionRepository.createConnectionRepository(userIdSource.getUserId()).findPrimaryConnection(Odnoklassniki.class);
-        if (logger.isDebugEnabled() && connection == null) {
-            logger.debug("No current connection; Returning default OdnoklassnikiTemplate instance.");
+        if (log.isDebugEnabled() && connection == null) {
+            log.debug("No current connection; Returning default OdnoklassnikiTemplate instance.");
         }
         return connection != null ? connection.getApi() : new OdnoklassnikiTemplate();
     }
-
-    private final static Log logger = LogFactory.getLog(OdnoklassnikiApiHelper.class);
-
 }

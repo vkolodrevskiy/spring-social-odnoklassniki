@@ -36,11 +36,9 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
 
     private UsersOperations usersOperations;
 
-    private final String applicationKey;
-
-    private final String applicationSecretKey;
-
     private final String accessToken;
+    private final String applicationKey;
+    private final String applicationSecretKey;
 
     public OdnoklassnikiTemplate() {
         this.applicationKey = null;
@@ -80,7 +78,7 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
     }
 
     private void initSubApis() {
-        usersOperations = new UsersTemplate(applicationKey, applicationSecretKey, getRestTemplate(), accessToken, isAuthorized());
+        usersOperations = new UsersTemplate(getRestTemplate(), accessToken, applicationKey, applicationSecretKey, isAuthorized());
     }
 
     @Override
