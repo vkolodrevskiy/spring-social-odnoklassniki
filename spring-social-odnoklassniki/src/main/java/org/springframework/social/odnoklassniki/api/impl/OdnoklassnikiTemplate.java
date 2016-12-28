@@ -23,6 +23,7 @@ import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.odnoklassniki.api.Odnoklassniki;
 import org.springframework.social.odnoklassniki.api.OdnoklassnikiErrorHandler;
 import org.springframework.social.odnoklassniki.api.UsersOperations;
+import org.springframework.social.odnoklassniki.api.json.OdnoklassnikiModule;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,6 +40,8 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
     private final String accessToken;
     private final String applicationKey;
     private final String applicationSecretKey;
+
+    private ObjectMapper objectMapper;
 
     public OdnoklassnikiTemplate() {
         this.applicationKey = null;
@@ -71,7 +74,8 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
                 mTypes.add(new MediaType("text", "javascript", MappingJackson2HttpMessageConverter.DEFAULT_CHARSET));
                 jsonConverter.setSupportedMediaTypes(mTypes);
 
-                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper = new ObjectMapper();
+                objectMapper.registerModule(new OdnoklassnikiModule());
                 jsonConverter.setObjectMapper(objectMapper);
             }
         }

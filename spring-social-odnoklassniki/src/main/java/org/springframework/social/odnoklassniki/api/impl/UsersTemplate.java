@@ -21,11 +21,12 @@ import org.springframework.social.support.URIBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * User operations.
+ *
  * @author vkolodrevskiy
  */
 public class UsersTemplate extends AbstractOdnoklassnikiOperations implements UsersOperations {
@@ -43,15 +44,10 @@ public class UsersTemplate extends AbstractOdnoklassnikiOperations implements Us
     @Override
     public OdnoklassnikiProfile getProfile() {
         requireAuthorization();
-        URI uri = URIBuilder.fromUri(makeOperationURL("users.getCurrentUser", Collections.emptyMap())).build();
-
-        Map<String, String> profiles = restTemplate.getForObject(uri, Map.class);
-
-        OdnoklassnikiProfile profile = new OdnoklassnikiProfile(profiles.get("uid"),
-            profiles.get("first_name"), profiles.get("last_name"), profiles.get("email"),
-            "http://ok.ru?id=" + profiles.get("uid"));
-
-        profile.setPhoto(profiles.get("pic_1"));
+        Map<String, String> data = new HashMap<>();
+        data.put("fields", DEFAULT_FIELDS);
+        URI uri = URIBuilder.fromUri(makeOperationURL("users.getCurrentUser", data)).build();
+        OdnoklassnikiProfile profile = restTemplate.getForObject(uri, OdnoklassnikiProfile.class);
 
         return profile;
     }

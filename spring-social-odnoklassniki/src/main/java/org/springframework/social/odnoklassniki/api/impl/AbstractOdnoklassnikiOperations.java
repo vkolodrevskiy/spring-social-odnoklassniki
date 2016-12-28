@@ -26,6 +26,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * Generic class for operation templates.
+ *
+ * @author vkolodrevskiy
+ */
 public abstract class AbstractOdnoklassnikiOperations {
     private final static Log log = LogFactory.getLog(AbstractOdnoklassnikiOperations.class);
 
@@ -34,9 +39,7 @@ public abstract class AbstractOdnoklassnikiOperations {
     private final SortedMap<String, String> params = new TreeMap<>(String::compareTo);
 
     private final boolean isAuthorized;
-
     private final String accessToken;
-
     private final String applicationSecretKey;
 
     public AbstractOdnoklassnikiOperations(String applicationKey, String applicationSecretKey, String accessToken, boolean isAuthorized) {

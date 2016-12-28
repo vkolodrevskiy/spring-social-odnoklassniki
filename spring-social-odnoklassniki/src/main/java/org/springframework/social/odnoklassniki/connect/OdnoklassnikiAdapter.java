@@ -45,8 +45,7 @@ public class OdnoklassnikiAdapter implements ApiAdapter<Odnoklassniki> {
         OdnoklassnikiProfile profile = odnoklassnikiru.usersOperations().getProfile();
         values.setProviderUserId(profile.getUid());
         values.setDisplayName(profile.getFirstName() + " " + profile.getLastName());
-        values.setProfileUrl(profile.getLink());
-        values.setImageUrl(profile.getPhoto());
+        values.setImageUrl(profile.getPic1());
     }
 
     @Override
@@ -56,11 +55,12 @@ public class OdnoklassnikiAdapter implements ApiAdapter<Odnoklassniki> {
             .setFirstName(profile.getFirstName())
             .setLastName(profile.getLastName())
             .setName(profile.getFirstName() + " " + profile.getLastName())
-            .setEmail(profile.getEmail())
+            .setUsername(profile.getName())
             .build();
     }
 
     @Override
     public void updateStatus(Odnoklassniki api, String message) {
+        // nothing to do here
     }
 }

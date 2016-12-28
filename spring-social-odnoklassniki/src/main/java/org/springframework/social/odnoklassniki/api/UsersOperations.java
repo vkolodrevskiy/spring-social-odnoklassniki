@@ -21,6 +21,7 @@ package org.springframework.social.odnoklassniki.api;
  * @author vkolodrevskiy
  */
 public interface UsersOperations {
+    String DEFAULT_FIELDS = "uid,first_name,last_name,pic_1,name";
 
     /**
      * Retrieves the profile for the authenticated user.

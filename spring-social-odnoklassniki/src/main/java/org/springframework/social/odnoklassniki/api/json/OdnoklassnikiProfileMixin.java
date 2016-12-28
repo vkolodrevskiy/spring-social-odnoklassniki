@@ -13,40 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.odnoklassniki.api;
+package org.springframework.social.odnoklassniki.api.json;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Model class containing a Odnoklassnikiru user's profile information.
- *
- * @author vkolodrevskiy
+ * {@link org.springframework.social.odnoklassniki.api.OdnoklassnikiProfile} mixin.
  */
-public class OdnoklassnikiProfile {
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class OdnoklassnikiProfileMixin {
+    @JsonProperty("uid")
     private String uid;
+    @JsonProperty("first_name")
     private String firstName;
+    @JsonProperty("last_name")
     private String lastName;
+    @JsonProperty("pic_1")
     private String pic1;
+    @JsonProperty("name")
     private String name;
-
-    public OdnoklassnikiProfile() {
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPic1() {
-        return pic1;
-    }
-
-    public String getName() {
-        return name;
-    }
 }
