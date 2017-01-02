@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 package org.springframework.social.odnoklassniki.api.impl;
 
-import org.springframework.social.odnoklassniki.api.OdnoklassnikiProfile;
-import org.springframework.social.odnoklassniki.api.UsersOperations;
+import org.springframework.social.odnoklassniki.api.FriendsOperations;
 import org.springframework.social.support.URIBuilder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -25,30 +25,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User operations.
+ * Friends operations.
  *
  * @author vkolodrevskiy
  */
-public class UsersTemplate extends AbstractOdnoklassnikiOperations implements UsersOperations {
-
+public class FriendsTemplate extends AbstractOdnoklassnikiOperations implements FriendsOperations {
     private final RestTemplate restTemplate;
 
-    public UsersTemplate(RestTemplate restTemplate, String accessToken, String applicationKey,
-                         String applicationSecretKey, boolean isAuthorizedForUser) {
-
+    public FriendsTemplate(RestTemplate restTemplate, String accessToken, String applicationKey,
+                           String applicationSecretKey, boolean isAuthorizedForUser) {
         super(applicationKey, applicationSecretKey, accessToken, isAuthorizedForUser);
         this.restTemplate = restTemplate;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public OdnoklassnikiProfile getProfile() {
-        requireAuthorization();
+    public String get(String fid) {
         Map<String, String> data = new HashMap<>();
-        data.put("fields", DEFAULT_FIELDS);
-        URI uri = URIBuilder.fromUri(makeOperationURL("users.getCurrentUser", data)).build();
-        OdnoklassnikiProfile profile = restTemplate.getForObject(uri, OdnoklassnikiProfile.class);
+        if (!StringUtils.isEmpty(fid)) {
+            data.put("fid", fid);
+        }
 
-        return profile;
+        URI uri = URIBuilder.fromUri(makeOperationURL("friends.get", data)).build();
+        String friends = restTemplate.getForObject(uri, String.class);
+
+        return friends;
     }
 }

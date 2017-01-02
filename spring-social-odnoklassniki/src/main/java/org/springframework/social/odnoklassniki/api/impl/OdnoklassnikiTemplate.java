@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
+import org.springframework.social.odnoklassniki.api.FriendsOperations;
 import org.springframework.social.odnoklassniki.api.Odnoklassniki;
 import org.springframework.social.odnoklassniki.api.OdnoklassnikiErrorHandler;
 import org.springframework.social.odnoklassniki.api.UsersOperations;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements Odnoklassniki {
 
+    private FriendsOperations friendsOperations;
     private UsersOperations usersOperations;
 
     private final String accessToken;
@@ -86,6 +88,12 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
 
     private void initSubApis() {
         usersOperations = new UsersTemplate(getRestTemplate(), accessToken, applicationKey, applicationSecretKey, isAuthorized());
+        friendsOperations = new FriendsTemplate(getRestTemplate(), accessToken, applicationKey, applicationSecretKey, isAuthorized());
+    }
+
+    @Override
+    public FriendsOperations friendsOperations() {
+        return friendsOperations;
     }
 
     @Override

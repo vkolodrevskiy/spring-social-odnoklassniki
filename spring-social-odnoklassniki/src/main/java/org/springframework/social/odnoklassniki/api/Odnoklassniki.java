@@ -28,6 +28,13 @@ import org.springframework.web.client.RestOperations;
 public interface Odnoklassniki extends ApiBinding {
 
     /**
+     * Returns the portion of the Odnoklassniki API containing the friends operations.
+     *
+     * @return user operations
+     */
+    FriendsOperations friendsOperations();
+
+    /**
      * Returns the portion of the Odnoklassniki API containing the user operations.
      *
      * @return user operations
@@ -35,7 +42,8 @@ public interface Odnoklassniki extends ApiBinding {
     UsersOperations usersOperations();
 
     /**
-     * Returns the underlying {@link RestOperations} object allowing for consumption of LinkedIn endpoints that may not be otherwise covered by the API binding.
+     * Returns the underlying {@link RestOperations} object allowing for consumption of LinkedIn endpoints
+     * that may not be otherwise covered by the API binding.
      * The RestOperations object returned is configured to include an OAuth "Authorization" header on all requests.
      * @return a {@link RestOperations} for work against the LinkedIn API at a low-level.
      */
