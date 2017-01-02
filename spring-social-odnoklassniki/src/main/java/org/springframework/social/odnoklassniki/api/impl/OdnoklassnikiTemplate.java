@@ -24,12 +24,14 @@ import org.springframework.social.odnoklassniki.api.Odnoklassniki;
 import org.springframework.social.odnoklassniki.api.OdnoklassnikiErrorHandler;
 import org.springframework.social.odnoklassniki.api.UsersOperations;
 import org.springframework.social.odnoklassniki.api.json.OdnoklassnikiModule;
+import org.springframework.util.Assert;
+import org.springframework.web.client.RestOperations;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Odnoklassniki template.
+ *  * This is the central class for interacting with Odnoklassniki.
  *
  * @author vkolodrevskiy
  */
@@ -52,6 +54,7 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
 
     public OdnoklassnikiTemplate(String applicationKey, String applicationSecretKey, String accessToken) {
         super(accessToken);
+        Assert.hasLength(accessToken, "Access token cannot be null or empty.");
         this.applicationKey = applicationKey;
         this.applicationSecretKey = applicationSecretKey;
         this.accessToken = accessToken;
@@ -88,5 +91,10 @@ public class OdnoklassnikiTemplate extends AbstractOAuth2ApiBinding implements O
     @Override
     public UsersOperations usersOperations() {
         return usersOperations;
+    }
+
+    @Override
+    public RestOperations restOperations() {
+        return getRestTemplate();
     }
 }

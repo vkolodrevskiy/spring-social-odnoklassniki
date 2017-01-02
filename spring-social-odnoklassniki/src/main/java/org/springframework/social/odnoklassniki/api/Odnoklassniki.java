@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.springframework.social.odnoklassniki.api;
 
 import org.springframework.social.ApiBinding;
 import org.springframework.social.odnoklassniki.api.impl.OdnoklassnikiTemplate;
+import org.springframework.web.client.RestOperations;
 
 /**
  * Interface specifying a basic set of operations for interacting with GitHub.
@@ -31,5 +32,12 @@ public interface Odnoklassniki extends ApiBinding {
      *
      * @return user operations
      */
-    public UsersOperations usersOperations();
+    UsersOperations usersOperations();
+
+    /**
+     * Returns the underlying {@link RestOperations} object allowing for consumption of LinkedIn endpoints that may not be otherwise covered by the API binding.
+     * The RestOperations object returned is configured to include an OAuth "Authorization" header on all requests.
+     * @return a {@link RestOperations} for work against the LinkedIn API at a low-level.
+     */
+    RestOperations restOperations();
 }
