@@ -31,7 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *  * This is the central class for interacting with Odnoklassniki.
+ * This is the central class for interacting with Odnoklassniki.
  *
  * @author vkolodrevskiy
  */
