@@ -4,15 +4,15 @@
 To check out the project and build from source, do the following:
 
 ```
- git clone git://github.com/vkolodrevskiy/spring-social-odnoklassniki.git
- cd spring-social-odnoklassniki
- ./gradlew build
+git clone git://github.com/vkolodrevskiy/spring-social-odnoklassniki.git
+cd spring-social-odnoklassniki
+./gradlew build
 ```
 
 To generate Eclipse metadata (.classpath and .project files), do the following:
 
 ```
- ./gradlew eclipse
+./gradlew eclipse
 ```
 
 Once complete, you may then import the projects into Eclipse as usual:
@@ -21,13 +21,13 @@ Once complete, you may then import the projects into Eclipse as usual:
 To generate IDEA metadata (.iml and .ipr files), do the following:
 
 ```
- ./gradlew idea
+./gradlew idea
 ```
 
 To build the JavaDoc, do the following from within the root directory:
 
 ```
- ./gradlew :docs:api
+./gradlew :docs:api
 ```
 
 The result will be available in `'docs/build/api'`.
