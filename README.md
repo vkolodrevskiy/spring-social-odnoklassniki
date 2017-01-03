@@ -1,5 +1,5 @@
 ### Spring Social Odnoklassniki
-Build [![Build Status](http://fugru.com/jenkins/buildStatus/icon?job=spring-social-odnoklassniki)](http://fugru.com/jenkins/job/spring-social-odnoklassniki/)
+[![Build Status](http://fugru.com/jenkins/buildStatus/icon?job=spring-social-odnoklassniki)](http://fugru.com/jenkins/job/spring-social-odnoklassniki/)
 
 To check out the project and build from source, do the following:
 
