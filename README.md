@@ -1,4 +1,6 @@
 ### Spring Social Odnoklassniki
+Build [![Build Status](http://fugru.com/jenkins/buildStatus/icon?job=spring-social-odnoklassniki)](http://fugru.com/jenkins/job/spring-social-odnoklassniki/)
+
 To check out the project and build from source, do the following:
 
 ```
@@ -31,5 +33,3 @@ To build the JavaDoc, do the following from within the root directory:
 The result will be available in `'docs/build/api'`.
 
 For more details go to project wiki https://github.com/vkolodrevskiy/spring-social-odnoklassniki/wiki
-
-[![Build Status](http://fugru.com/jenkins/buildStatus/icon?job=spring-social-odnoklassniki)](http://fugru.com/jenkins/job/spring-social-odnoklassniki/)
