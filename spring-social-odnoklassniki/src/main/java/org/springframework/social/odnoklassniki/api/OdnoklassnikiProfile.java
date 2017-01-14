@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ public class OdnoklassnikiProfile {
     private String uid;
     private String firstName;
     private String lastName;
+    private String email;
     private String pic1;
     private String name;
 
@@ -40,6 +41,10 @@ public class OdnoklassnikiProfile {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPic1() {
